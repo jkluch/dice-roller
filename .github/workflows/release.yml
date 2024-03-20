@@ -16,6 +16,11 @@ jobs:
     - name: Install Poetry
       uses: abatilo/actions-poetry@v3
 
+    - name: Setup a local virtual environment (if no poetry.toml file)
+      run: |
+        poetry config virtualenvs.create true --local
+        poetry config virtualenvs.in-project true --local
+
     - name: Set up Python
       uses: actions/setup-python@v5
       id: py-setup
@@ -29,7 +34,7 @@ jobs:
       run: poetry install
 
     - name: Build executable
-      run: pyinstaller.exe --onefile cli_dice.py
+      run: .venv/Scripts/pyinstaller.exe --onefile cli_dice.py
 
     - name: Create Release and upload cli_dice.exe
       uses: softprops/action-gh-release@v2
