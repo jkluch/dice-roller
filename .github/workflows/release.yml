@@ -1,12 +1,16 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
 
 jobs:
   build:
+    permissions:
+      contents: write # needed for action-gh-release
+      discussions: write # needed for action-gh-release
     runs-on: windows-latest
 
     steps:
