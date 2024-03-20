@@ -1,8 +1,10 @@
 ~~This project has a GUI where you set a list of `n` dice each with `x` sides then use mouse activity to generate randomness which is used to determine the rolls.~~
 
+# Description
 This is a command line program for rolling dice.  
 The dice rolls are generated, in part, using your mouse movments to make it feel more like actually rolling dice.
 
+# How to use
 The program takes in args in the following format `<number>d<sides>[,<keep>][,<group_copies>]`  
 `<number>` is the number of dice to roll  
 `<sides>` is the number of sides on the dice  
@@ -13,9 +15,9 @@ You can pass in multiple dice groups at a time sperated by a space. `./cli_dice.
 You can also use the `-i` flag to read in a yaml file to reroll the same dice from your previous roll.  
 Optionally you can lock in the values of some of the rolls.
 
-### Lets look at some examples:
+# Lets look at some examples:
 
-#### You want to generate Ability Scores for a DnD character:
+### You want to generate Ability Scores for a DnD character:
 `./cli_dice.exe 4d6,3,6`  
 `4d6` You want 4 six sided dice (This will be enough to calculate one ability score).  
 `3` you only want to keep the values of the top 3 roles  
@@ -35,7 +37,9 @@ Your output would look like this:
 Netting you the following roll values:  
 13,12,9,14,8,14
 
-#### You want to roll a d20 to see if you hit a target:
+---
+
+### You want to roll a d20 to see if you hit a target:
 `./cli_dice.exe 1d20`  
 `1d20` You want 1 twenty sided dice  
 Your output would look like this:  
@@ -48,44 +52,33 @@ Your output would look like this:
 └───────┴──────┴────┴───────┴────────────┘
 ```
 
-#### Yahtzee:
+---
+
+### Yahtzee:
 `./cli_dice.exe 5d6`  
 `5d6` You want 5 six sided dice  
 Now lets say you want to keep the 3 highest rolls rerolling the other 2  
 Your first command generates a dice.yaml file that can be modified to lock in the dice you want to keep.  
 `./cli_dice.exe -i dice.yaml` will read in your previous rolls and only reroll the dice you didn't lock in.  
-```yaml
-- dice:
-  - 1_value: 1
-    2_locked: false
-  - 1_value: 3
-    2_locked: false # set to true
-  - 1_value: 4
-    2_locked: false # set to true
-  - 1_value: 1
-    2_locked: false
-  - 1_value: 3
-    2_locked: false # set to true
-  keep: 5
-  sides: 6
-```
+
 Lets keep the 3 highest rolls by setting `locked` to `true` and reroll the other 2 dice  
-**Before:**
+**Update dice.yaml:**
 ```yaml
 - dice:
   - 1_value: 1
     2_locked: false
   - 1_value: 3
-    2_locked: true
+    2_locked: false # Change me from false to true
   - 1_value: 4
-    2_locked: true
+    2_locked: false # Change me too
   - 1_value: 1
     2_locked: false
   - 1_value: 3
-    2_locked: true
+    2_locked: false # Change me too
   keep: 5
   sides: 6
 ```
+After updating the dice you want to lock in to `true` reroll  
 `./cli_dice.exe -i dice.yaml`  
 **After**
 ```yaml
@@ -104,7 +97,8 @@ Lets keep the 3 highest rolls by setting `locked` to `true` and reroll the other
   sides: 6
 ```
 We went from:
-`1,3,4,1,3` to `4,3,4,3,3`
+`1,3,4,1,3` to `4,3,4,3,3`  
+You'll notice we retained the two 3s and one 4 from the previous roll and our two 1s rerolled into 3s.
 
 
 
