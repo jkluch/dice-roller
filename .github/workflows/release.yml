@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      id: py-setup
+      with:
+        python-version: 3.12
+        cache: 'poetry' # caching pip dependencies
+    - run: echo '${{ steps.py-setup.outputs.cache-hit }}' # true if cache-hit occurred on the primary key
+
+    - name: Install Poetry
+      run: |
+        (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Build executable
+      run: pyinstaller --onefile cli_dice.py
+
+    - name: Create Release and upload cli_dice.exe
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ./dist/cli_dice.exe

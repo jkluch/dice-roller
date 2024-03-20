@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dice-roller"
+version = "0.1.0"
+description = ""
+authors = ["Joe Kluch <joe.kluchinski@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+pynput = "^1.7.6"
+numpy = "^1.26.4"
+prettytable = "^3.10.0"
+rich = "^13.7.1"
+pyyaml = "^6.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
